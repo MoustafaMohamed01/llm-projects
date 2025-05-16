@@ -25,12 +25,12 @@ This project is a lightweight **AI-powered SQL Query Generator** built with **St
 
 ai-sql-query-generator/
 │
-├── api\_key.py              # API key configuration for Gemini
-├── gemini\_app.py           # Streamlit app using Google Gemini
-├── llama\_app.py            # Streamlit app using LLaMA 3.2 via Ollama
-├── requirements.txt        # Python dependencies
+├── api_key.py              # API key configuration for Gemini
+├── gemini_app.py           # Streamlit app using Google Gemini
+├── llama_app.py            # Streamlit app using LLaMA 3.2 via Ollama
+├── requirements.txt         # Python dependencies
 └── images/
-└── streamlit\_app.jpg   # UI screenshot
+    └── streamlit_app.jpg   # UI screenshot
 
 ````
 
