@@ -1,4 +1,7 @@
 streamlit
 google-generativeai
+langchain
+langchain-google-genai
+chromadb
 json
 requests
