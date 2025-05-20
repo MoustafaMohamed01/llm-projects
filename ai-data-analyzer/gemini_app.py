@@ -1,39 +1,50 @@
 import streamlit as st
-from langchain.document_loaders.csv_loader import CSVLoader
-import tempfile
-import os
-from utils import get_model_response
+import pandas as pd
+import google.generativeai as genai
+from api_key import GEMINI_API_KEY
 
-def main():
-    st.title('📊 Chat with AI Data Analyzer')
+genai.configure(api_key=GEMINI_API_KEY)
+model = genai.GenerativeModel("gemini-2.0-flash")
 
-    uploaded_file = st.file_uploader('Choose a CSV file:', type='csv')
+st.set_page_config(page_title="AI CSV Assistant", layout="centered")
+st.title("AI CSV Assistant (No Embeddings)")
+st.write("Upload your CSV and ask questions about it.")
 
-    if uploaded_file:
-        with tempfile.NamedTemporaryFile(delete=False, suffix=".csv") as tmp_file:
-            tmp_file.write(uploaded_file.getvalue())
-            tmp_file_path = tmp_file.name
+uploaded_file = st.file_uploader("Upload a CSV file", type=["csv"])
 
-        try:
-            loader = CSVLoader(file_path=tmp_file_path, encoding='utf-8', csv_args={'delimiter': ','})
-            data = loader.load()
+if uploaded_file is not None:
+    df = pd.read_csv(uploaded_file)
+    st.subheader("Data Preview")
+    st.dataframe(df.head())
 
-            user_input = st.text_input('Ask a question about the data:')
+    column_names = ", ".join(df.columns)
 
-            if user_input:
-                st.info("Generating response...")
-                try:
-                    response = get_model_response(data, user_input)
-                    st.success("Response:")
-                    st.write(response)
-                except Exception as e:
-                    st.error(f"Model error: {e}")
+    if "chat_history" not in st.session_state:
+        st.session_state.chat_history = []
 
-        except Exception as e:
-            st.error(f"CSV loading error: {e}")
-        finally:
-            if os.path.exists(tmp_file_path):
-                os.remove(tmp_file_path)
+    if st.session_state.chat_history:
+        st.subheader("💬 Previous Q&A")
+        for i, (q, a) in enumerate(st.session_state.chat_history):
+            st.markdown(f"**Q{i+1}:** {q}")
+            st.markdown(f"**A{i+1}:** {a}")
+            st.markdown("---")
 
-if __name__ == '__main__':
-    main()
+    user_query = st.text_input("Ask a question about your data")
+
+    if user_query:
+        with st.spinner("Thinking..."):
+            csv_sample = df.head(10).to_csv(index=False)
+            prompt = (
+                f"The dataset has the following columns: {column_names}.\n"
+                f"Here are the first 10 rows:\n{csv_sample}\n"
+                f"Now answer this question: {user_query}"
+            )
+            try:
+                response = model.generate_content(prompt)
+                answer_text = response.text
+                st.subheader("Answer")
+                st.write(answer_text)
+                
+                st.session_state.chat_history.append((user_query, answer_text))
+            except Exception as e:
+                st.error(f"Model error: {str(e)}")
