@@ -23,7 +23,7 @@ ai-data-analyzer/
 
 ---
 
-## ⚙️ Features
+## Features
 
 * Upload and preview CSV datasets
 * Ask questions about your data using:
