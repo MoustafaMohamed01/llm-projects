@@ -106,7 +106,7 @@ Install them globally or per-project as needed.
     <td><img src="ai-sql-query-generator/images/streamlit_app.jpg" alt="SQL Generator UI" width="400"/></td>
   </tr>
   <tr>
-    <td colspan="2" align="center"><img src="ai-data-analyzer/images/ai_csv_assistant.png" alt="CSV Assistant UI" width="400"/></td>
+    <td colspan="2" align="center"><img src="ai-data-analyzer/images/streamlit_app.jpg" alt="CSV Assistant UI" width="400"/></td>
   </tr>
 </table>
 
