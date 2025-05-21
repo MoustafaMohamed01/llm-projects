@@ -23,7 +23,7 @@ if uploaded_file is not None:
         st.session_state.chat_history = []
 
     if st.session_state.chat_history:
-        st.subheader("💬 Previous Q&A")
+        st.subheader("Previous Q&A")
         for i, (q, a) in enumerate(st.session_state.chat_history):
             st.markdown(f"**Q{i+1}:** {q}")
             st.markdown(f"**A{i+1}:** {a}")
@@ -33,10 +33,10 @@ if uploaded_file is not None:
 
     if user_query:
         with st.spinner("Thinking..."):
-            csv_sample = df.head(10).to_csv(index=False)
+            csv_sample = df.to_csv(index=False)
             prompt = (
                 f"The dataset has the following columns: {column_names}.\n"
-                f"Here are the first 10 rows:\n{csv_sample}\n"
+                f"Here are the rows:\n{csv_sample}\n"
                 f"Now answer this question: {user_query}"
             )
             try:
@@ -44,7 +44,7 @@ if uploaded_file is not None:
                 answer_text = response.text
                 st.subheader("Answer")
                 st.write(answer_text)
-                
+
                 st.session_state.chat_history.append((user_query, answer_text))
             except Exception as e:
                 st.error(f"Model error: {str(e)}")
