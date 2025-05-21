@@ -3,7 +3,7 @@
 This project provides a **lightweight AI-powered data assistant** built with **Streamlit** that lets you upload CSV files and ask natural language questions about your data. It supports **Google Gemini** and **LLaMA 3.2 via Ollama**, making it easy to analyze datasets locally or through the cloud without requiring embeddings or vector databases.
 
 <p align="center">
-  <img src="images/screenshot.png" alt="AI CSV Assistant Demo" width="700"/>
+  <img src="images/streamlit_app.jpg" alt="AI CSV Assistant Demo" width="700"/>
 </p>
 
 ---
