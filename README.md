@@ -2,7 +2,7 @@
 
 Welcome to the **LLM Projects** repository — a growing collection of hands-on applications powered by **Large Language Models (LLMs)** like **Google Gemini 2.0 Flash** and **Meta's LLaMA 3.2**. This repo showcases real-world use cases built with **Streamlit**, focused on automating content creation and enhancing productivity with AI.
 
-Whether you're a student, developer, or AI enthusiast, these projects demonstrate how to integrate cutting-edge LLMs into useful tools like blog generators and SQL query builders.
+Whether you're a student, developer, or AI enthusiast, these projects demonstrate how to integrate cutting-edge LLMs into useful tools like blog generators, SQL query builders, and data analysis assistants.
 
 ---
 
@@ -40,6 +40,22 @@ Turn plain English into fully-formed SQL queries! This tool supports schema cont
 
 ---
 
+### 3. [AI CSV Assistant](./ai-data-analyzer)
+
+Upload a CSV file and interact with your dataset through natural language questions using either **Google Gemini** or **LLaMA 3.2** via **Ollama**. No embeddings or external databases required.
+
+**Features:**
+
+* Upload and preview CSV files
+* Ask questions about your data
+* Gemini or local LLaMA backend support
+* No vector store needed
+* Session-based Q\&A memory
+
+[View README](./ai-data-analyzer/README.md)
+
+---
+
 ## Getting Started
 
 ### 1. Clone the Repository
@@ -68,16 +84,17 @@ GEMINI_API_KEY = "your_google_gemini_api_key"
 
 ---
 
-## Requirements:
+## Requirements
 
 Each app has its own `requirements.txt`, but common dependencies include:
 
 * `streamlit`
 * `google-generativeai`
+* `pandas`
 * `requests`
 * `json`
 
-Install them globally or per-project.
+Install them globally or per-project as needed.
 
 ---
 
@@ -87,6 +104,9 @@ Install them globally or per-project.
   <tr>
     <td><img src="ai-blog-assistant/images/Streamlit_app.jpg" alt="Blog Assistant UI" width="400"/></td>
     <td><img src="ai-sql-query-generator/images/streamlit_app.jpg" alt="SQL Generator UI" width="400"/></td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center"><img src="ai-data-analyzer/images/ai_csv_assistant.png" alt="CSV Assistant UI" width="400"/></td>
   </tr>
 </table>
 
