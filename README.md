@@ -56,7 +56,23 @@ Upload a CSV file and interact with your dataset through natural language questi
 
 ---
 
-### 4. [AI Document Summarizer](./ai-document-summarizer)
+### 4. [Website Summarizer](./ai-web-summarizer)
+
+Extract and summarize website content using **Google Gemini API** or **LLaMA 3.2** (via Ollama). Scrapes raw text, removes unnecessary elements, and outputs clean markdown summaries.
+
+**Features:**
+
+* Extracts title and main text from a URL
+* Removes scripts, styles, and irrelevant tags
+* Summarizes using Gemini or LLaMA 3.2
+* Works with Jupyter or standalone scripts
+* No need for embeddings or RAG setup
+
+[View README](./ai-web-summarizer/README.md)
+
+---
+
+### 5. [AI Document Summarizer](./ai-document-summarizer)
 
 Summarize content from uploaded **PDF** and **Word** documents in seconds using **Google Gemini 1.5 Flash** and **LangChain**. The app creates a vector-based knowledge base and queries the content for an intelligent summary.
 
