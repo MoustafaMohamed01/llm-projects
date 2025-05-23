@@ -56,6 +56,22 @@ Upload a CSV file and interact with your dataset through natural language questi
 
 ---
 
+### 4. [AI Document Summarizer](./ai-document-summarizer)
+
+Summarize content from uploaded **PDF** and **Word** documents in seconds using **Google Gemini 1.5 Flash** and **LangChain**. The app creates a vector-based knowledge base and queries the content for an intelligent summary.
+
+**Features:**
+
+* Upload `.pdf` or `.docx` files
+* Automatically extracts and cleans text
+* Uses FAISS and LangChain for context-aware summarization
+* Gemini 1.5 Flash as the LLM backend
+* Clean and responsive Streamlit interface
+
+[View README](./ai-document-summarizer/README.md)
+
+---
+
 ## Getting Started
 
 ### 1. Clone the Repository
@@ -106,13 +122,17 @@ Install them globally or per-project as needed.
     <td><img src="ai-sql-query-generator/images/streamlit_app.jpg" alt="SQL Generator UI" width="400"/></td>
   </tr>
   <tr>
-    <td colspan="2" align="center"><img src="ai-data-analyzer/images/streamlit_app.jpg" alt="CSV Assistant UI" width="400"/></td>
+    <td><img src="ai-data-analyzer/images/streamlit_app.jpg" alt="CSV Assistant UI" width="400"/></td>
+    <td><img src="ai-document-summarizer/images/streamlit_app.jpg" alt="Document Summarizer UI" width="400"/></td>
   </tr>
 </table>
 
 ---
 
 ## Author
+Created by **Moustafa Mohamed** - feel free to reach out!
 
-**Moustafa Mohamed**
-[LinkedIn](https://www.linkedin.com/in/moustafamohamed01/) • [GitHub](https://github.com/MoustafaMohamed01) • [Kaggle](https://www.kaggle.com/moustafamohamed01)
+* GitHub: [MoustafaMohamed01](https://github.com/MoustafaMohamed01)
+* Linkedin: [Moustafa Mohamed](https://www.linkedin.com/in/moustafamohamed01/)
+* Kaggle: [moustafamohamed01](https://www.kaggle.com/moustafamohamed01)
+---
