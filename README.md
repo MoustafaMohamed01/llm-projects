@@ -50,7 +50,7 @@ Upload a CSV file and interact with your dataset through natural language questi
 * Ask questions about your data
 * Gemini or local LLaMA backend support
 * No vector store needed
-* Session-based Q\&A memory
+* Session-based Q&A memory
 
 [View README](./ai-data-analyzer/README.md)
 
@@ -85,6 +85,22 @@ Summarize content from uploaded **PDF** and **Word** documents in seconds using 
 * Clean and responsive Streamlit interface
 
 [View README](./ai-document-summarizer/README.md)
+
+---
+
+## LLM Tools Suite
+
+An integrated collection of AI-powered tools designed to enhance productivity and streamline various tasks using advanced Large Language Models. This suite offers a unified interface to access powerful features for content generation, data analysis, query creation, and document summarization.
+
+**Features:**
+
+- 🏠 Overview: A welcoming home screen providing an introduction and quick overview of all available tools.  
+- 📝 Blog AI Assistant: Generate high-quality blog content using AI based on title, keywords, and desired word count.  
+- 📊 AI CSV Analyzer: Upload your CSV files and analyze them intelligently using LLM-powered queries.  
+- 💻 SQL Query Generator: Transform plain English into SQL queries with the help of AI.  
+- 📄 Document Summarizer: Upload a PDF or Word document and get a concise summary in seconds.
+
+[View README](./llm-tools-suite/README.md)
 
 ---
 
@@ -132,8 +148,6 @@ Install them globally or per-project as needed.
 
 ## Gallery
 
-## Gallery
-
 <table>
   <tr>
     <td><img src="ai-blog-assistant/images/Streamlit_app.jpg" alt="Blog Assistant UI" width="400"/></td>
@@ -145,16 +159,19 @@ Install them globally or per-project as needed.
   </tr>
   <tr>
     <td><img src="ai-web-summarizer/images/streamlit_app.png" alt="Web Summarizer UI" width="400"/></td>
-    <td></td>
+    <td><img src="llm-tools-suite/images/overview.png" alt="LLM Tools Suite Overview" width="400"/></td>
   </tr>
 </table>
 
 ---
 
 ## Author
+
 Created by **Moustafa Mohamed** - feel free to reach out!
 
-* GitHub: [MoustafaMohamed01](https://github.com/MoustafaMohamed01)
-* Linkedin: [Moustafa Mohamed](https://www.linkedin.com/in/moustafamohamed01/)
-* Kaggle: [moustafamohamed01](https://www.kaggle.com/moustafamohamed01)
+* **GitHub**: [MoustafaMohamed01](https://github.com/MoustafaMohamed01)
+* **Linkedin**: [Moustafa Mohamed](https://www.linkedin.com/in/moustafamohamed01/)
+* **Kaggle**: [moustafamohamed01](https://www.kaggle.com/moustafamohamed01)
+* **Portfolio**: [moustafamohamed](https://moustafamohamed.netlify.app/)
+
 ---
