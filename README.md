@@ -132,6 +132,8 @@ Install them globally or per-project as needed.
 
 ## Gallery
 
+## Gallery
+
 <table>
   <tr>
     <td><img src="ai-blog-assistant/images/Streamlit_app.jpg" alt="Blog Assistant UI" width="400"/></td>
@@ -140,6 +142,10 @@ Install them globally or per-project as needed.
   <tr>
     <td><img src="ai-data-analyzer/images/streamlit_app.jpg" alt="CSV Assistant UI" width="400"/></td>
     <td><img src="ai-document-summarizer/images/streamlit_app.jpg" alt="Document Summarizer UI" width="400"/></td>
+  </tr>
+  <tr>
+    <td><img src="llm-projects/ai-web-summarizer/images/streamlit_app.png" alt="Web Summarizer UI" width="400"/></td>
+    <td></td>
   </tr>
 </table>
 
