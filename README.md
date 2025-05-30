@@ -144,7 +144,7 @@ Install them globally or per-project as needed.
     <td><img src="ai-document-summarizer/images/streamlit_app.jpg" alt="Document Summarizer UI" width="400"/></td>
   </tr>
   <tr>
-    <td><img src="llm-projects/ai-web-summarizer/images/streamlit_app.png" alt="Web Summarizer UI" width="400"/></td>
+    <td><img src="ai-web-summarizer/images/streamlit_app.png" alt="Web Summarizer UI" width="400"/></td>
     <td></td>
   </tr>
 </table>
