@@ -6,7 +6,7 @@
 
 ## Screeshot
 
-![AI Assistant Pro - Screenshot](images/screenshot.png)
+![AI Assistant Pro - Screenshot](images/screenshot.jpg)
 
 ---
 
