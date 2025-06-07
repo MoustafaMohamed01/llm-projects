@@ -88,7 +88,23 @@ Summarize content from uploaded **PDF** and **Word** documents in seconds using 
 
 ---
 
-## LLM Tools Suite
+### 6. [AI Assistant Pro](./ai-assistant-pro)
+
+A professional chatbot interface built with **Gemini 2.0 Flash**, designed for business, academic, and formal communication. It features context-aware chat, markdown formatting, and exportable transcripts.
+
+**Features:**
+
+* Powered by Gemini 2.0 Flash
+* Formal, accurate, and solution-focused replies
+* Persistent session memory
+* Chat export to `.txt` format
+* Sleek UI with Streamlit
+
+[View README](./ai-assistant-pro/README.md)
+
+---
+
+## [LLM Tools Suite](https://github.com/MoustafaMohamed01/llm-tools-suite)
 
 An integrated collection of AI-powered tools designed to enhance productivity and streamline various tasks using advanced Large Language Models. This suite offers a unified interface to access powerful features for content generation, data analysis, query creation, and document summarization.
 
@@ -111,7 +127,7 @@ An integrated collection of AI-powered tools designed to enhance productivity an
 ```bash
 git clone https://github.com/MoustafaMohamed01/llm-projects.git
 cd llm-projects
-```
+````
 
 ### 2. Navigate to Any Subproject
 
@@ -160,6 +176,9 @@ Install them globally or per-project as needed.
   <tr>
     <td><img src="ai-web-summarizer/images/streamlit_app.png" alt="Web Summarizer UI" width="400"/></td>
     <td><img src="llm-tools-suite/images/overview.png" alt="LLM Tools Suite Overview" width="400"/></td>
+  </tr>
+  <tr>
+    <td><img src="ai-assistant-pro/images/screenshot.jpg" alt="AI Assistant Pro UI" width="400"/></td>
   </tr>
 </table>
 
