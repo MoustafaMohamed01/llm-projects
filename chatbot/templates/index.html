@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Professional AI Chatbot powered by Google Gemini"
+    />
+    <meta
+      name="keywords"
+      content="AI, Chatbot, Gemini, Google AI, Conversational AI"
+    />
+    <title>Gemini AI Chatbot | Professional AI Assistant</title>
+
+    <link rel="icon" href="/static/favicon.ico" type="image/x-icon" />
+
+    <link rel="stylesheet" href="/static/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  </head>
+
+  <body>
+    <div class="app-container">
+      <div class="loading-overlay" id="loading-overlay">
+        <div class="loading-spinner"></div>
+        <span>Processing...</span>
+      </div>
+
+      <div class="notification-container" id="notification-container"></div>
+
+      <div class="chat-wrapper">
+        <div class="chat-header">
+          <div class="header-content">
+            <div class="logo">
+              <i class="fas fa-robot"></i>
+              <h1>Gemini AI</h1>
+            </div>
+            <div class="header-meta">
+              <span class="status-indicator" id="status-indicator">
+                <i class="fas fa-circle"></i> Online
+              </span>
+              <button
+                class="btn-settings"
+                id="settings-btn"
+                aria-label="Settings"
+              >
+                <i class="fas fa-cog"></i>
+              </button>
+            </div>
+          </div>
+          <p class="subtitle">
+            Conversational Intelligence Powered by Gemini 1.5 Flash
+          </p>
+        </div>
+
+        <div class="chat-box" id="chat-box">
+          <div class="welcome-message">
+            <h2>Welcome to Gemini AI Assistant</h2>
+            <p>How can I help you today? Here are some suggestions:</p>
+            <ul class="suggestions">
+              <li>"Explain quantum computing in simple terms"</li>
+              <li>"Help me write a professional email"</li>
+              <li>"What's the latest in AI research?"</li>
+            </ul>
+            <div class="disclaimer">
+              <p>
+                <i class="fas fa-info-circle"></i> Gemini may produce inaccurate
+                information. Always verify important facts.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <form id="chat-form" class="chat-form">
+          <div class="input-group">
+            <button
+              type="button"
+              class="btn-attachment"
+              id="attachment-btn"
+              aria-label="Attach file"
+            >
+              <i class="fas fa-paperclip"></i>
+            </button>
+            <input
+              type="text"
+              id="user-input"
+              name="prompt"
+              placeholder="Type your message..."
+              autocomplete="off"
+              aria-label="Type your message"
+              required
+            />
+            <button type="submit" class="btn-send" aria-label="Send message">
+              <i class="fas fa-paper-plane"></i>
+            </button>
+          </div>
+          <div class="form-footer">
+            <span class="character-count" id="character-count">0/2000</span>
+            <div
+              class="typing-indicator"
+              id="typing-indicator"
+              style="display: none"
+            >
+              <span>Gemini is typing</span>
+              <div class="typing-dots">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="modal" id="settings-modal">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3>Settings</h3>
+            <button class="btn-close" id="close-settings">&times;</button>
+          </div>
+          <div class="modal-body">
+            <div class="setting-group">
+              <h4>Appearance</h4>
+              <div class="theme-switcher">
+                <button class="theme-btn light" data-theme="light">
+                  <i class="fas fa-sun"></i> Light
+                </button>
+                <button class="theme-btn dark active" data-theme="dark">
+                  <i class="fas fa-moon"></i> Dark
+                </button>
+                <button class="theme-btn system" data-theme="system">
+                  <i class="fas fa-desktop"></i> System
+                </button>
+              </div>
+            </div>
+            <div class="setting-group">
+              <h4>Chat Behavior</h4>
+              <label class="switch">
+                <input type="checkbox" id="typing-animation" checked />
+                <span class="slider"></span>
+                <span>Typing animation</span>
+              </label>
+              <label class="switch">
+                <input type="checkbox" id="markdown-rendering" checked />
+                <span class="slider"></span>
+                <span>Markdown rendering</span>
+              </label>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <p class="version-info">Gemini AI Chatbot v1.0.0</p>
+            <p class="copyright">
+              &copy; <span id="current-year">{{ current_year }}</span> All
+              rights reserved.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal" id="upload-modal">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3>Upload File</h3>
+            <button class="btn-close" id="close-upload">&times;</button>
+          </div>
+          <div class="modal-body">
+            <form id="upload-form">
+              <div class="file-upload">
+                <input
+                  type="file"
+                  id="file-input"
+                  accept=".txt,.pdf,.doc,.docx,.csv,.xlsx,.jpg,.png"
+                />
+                <label for="file-input" class="file-label">
+                  <i class="fas fa-cloud-upload-alt"></i>
+                  <span>Choose a file or drag it here</span>
+                  <small
+                    >Supported formats: TXT, PDF, DOCX, XLSX, JPG, PNG (max
+                    5MB)</small
+                  >
+                </label>
+                <div class="file-info" id="file-info"></div>
+              </div>
+              <button type="submit" class="btn-upload">Upload</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const config = {
+        maxMessageLength: 2000,
+        typingDelay: 1000,
+        sessionId: generateSessionId(),
+        apiEndpoint: "/api/chat",
+        uploadEndpoint: "/api/upload",
+      };
+
+      const chatForm = document.getElementById("chat-form");
+      const userInput = document.getElementById("user-input");
+      const chatBox = document.getElementById("chat-box");
+      const characterCount = document.getElementById("character-count");
+      const typingIndicator = document.getElementById("typing-indicator");
+      const loadingOverlay = document.getElementById("loading-overlay");
+      const statusIndicator = document.getElementById("status-indicator");
+      const settingsBtn = document.getElementById("settings-btn");
+      const settingsModal = document.getElementById("settings-modal");
+      const closeSettings = document.getElementById("close-settings");
+      const attachmentBtn = document.getElementById("attachment-btn");
+      const uploadModal = document.getElementById("upload-modal");
+      const closeUpload = document.getElementById("close-upload");
+      const fileInput = document.getElementById("file-input");
+      const fileInfo = document.getElementById("file-info");
+      const uploadForm = document.getElementById("upload-form");
+
+      document.addEventListener("DOMContentLoaded", () => {
+        loadSettings();
+        userInput.addEventListener("input", updateCharacterCount);
+        checkApiHealth();
+        document.getElementById("current-year").textContent =
+          new Date().getFullYear();
+
+        userInput.focus();
+      });
+
+      function generateSessionId() {
+        return (
+          "session-" +
+          Math.random().toString(36).substring(2, 15) +
+          Math.random().toString(36).substring(2, 15)
+        );
+      }
+
+      function updateCharacterCount() {
+        const count = userInput.value.length;
+        characterCount.textContent = `${count}/${config.maxMessageLength}`;
+
+        if (count > config.maxMessageLength * 0.9) {
+          characterCount.classList.add("warning");
+        } else {
+          characterCount.classList.remove("warning");
+        }
+      }
+
+      async function checkApiHealth() {
+        try {
+          const response = await fetch("/api/health");
+          if (response.ok) {
+            statusIndicator.innerHTML = '<i class="fas fa-circle"></i> Online';
+            statusIndicator.classList.add("online");
+          } else {
+            throw new Error("API not healthy");
+          }
+        } catch (error) {
+          statusIndicator.innerHTML = '<i class="fas fa-circle"></i> Offline';
+          statusIndicator.classList.add("offline");
+          showNotification(
+            "Connection error. Some features may not work.",
+            "error"
+          );
+        }
+      }
+
+      chatForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const message = userInput.value.trim();
+
+        if (!message) {
+          showNotification("Please enter a message", "warning");
+          return;
+        }
+
+        if (message.length > config.maxMessageLength) {
+          showNotification(
+            `Message too long (max ${config.maxMessageLength} characters)`,
+            "error"
+          );
+          return;
+        }
+
+        appendMessage("You", message, "user");
+        userInput.value = "";
+        updateCharacterCount();
+
+        if (document.getElementById("typing-animation").checked) {
+          typingIndicator.style.display = "flex";
+          await new Promise((resolve) =>
+            setTimeout(resolve, config.typingDelay)
+          );
+        }
+
+        try {
+          const response = await fetch(config.apiEndpoint, {
+            method: "POST",
+            body: new URLSearchParams({
+              prompt: message,
+              session_id: config.sessionId,
+            }),
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+              "X-Requested-With": "XMLHttpRequest",
+            },
+          });
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+
+          const data = await response.json();
+
+          if (data.status === "error") {
+            throw new Error(data.error || "Unknown error occurred");
+          }
+
+          appendMessage("Gemini", data.response, "bot");
+        } catch (err) {
+          console.error("Chat error:", err);
+          appendMessage(
+            "Gemini",
+            "⚠️ Sorry, I encountered an error processing your request. Please try again later.",
+            "bot error"
+          );
+          showNotification("Error processing your request", "error");
+        } finally {
+          typingIndicator.style.display = "none";
+        }
+      });
+
+      function appendMessage(sender, message, type) {
+        const msgElem = document.createElement("div");
+        msgElem.className = `chat-message ${type}`;
+
+        const timestamp = new Date().toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+
+        const markdownEnabled =
+          document.getElementById("markdown-rendering").checked;
+        const formattedMessage = markdownEnabled
+          ? marked.parse(message)
+          : message;
+
+        msgElem.innerHTML = `
+                <div class="message-header">
+                    <strong>${sender}</strong>
+                    <span class="message-time">${timestamp}</span>
+                </div>
+                <div class="message-content">${formattedMessage}</div>
+            `;
+
+        chatBox.appendChild(msgElem);
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+        const welcomeMessage = document.querySelector(".welcome-message");
+        if (welcomeMessage && type === "user") {
+          welcomeMessage.remove();
+        }
+      }
+
+      function showNotification(message, type = "info") {
+        const notification = document.createElement("div");
+        notification.className = `notification ${type}`;
+        notification.innerHTML = `
+                <i class="fas fa-${
+                  type === "error"
+                    ? "exclamation-circle"
+                    : type === "success"
+                    ? "check-circle"
+                    : "info-circle"
+                }"></i>
+                <span>${message}</span>
+            `;
+
+        const container = document.getElementById("notification-container");
+        container.appendChild(notification);
+
+        setTimeout(() => {
+          notification.classList.add("fade-out");
+          setTimeout(() => notification.remove(), 500);
+        }, 5000);
+      }
+
+      function showLoading(show) {
+        loadingOverlay.style.display = show ? "flex" : "none";
+      }
+
+      settingsBtn.addEventListener("click", () => {
+        settingsModal.style.display = "block";
+      });
+
+      closeSettings.addEventListener("click", () => {
+        settingsModal.style.display = "none";
+      });
+
+      attachmentBtn.addEventListener("click", () => {
+        uploadModal.style.display = "block";
+      });
+
+      closeUpload.addEventListener("click", () => {
+        uploadModal.style.display = "none";
+      });
+
+      window.addEventListener("click", (e) => {
+        if (e.target === settingsModal || e.target === uploadModal) {
+          settingsModal.style.display = "none";
+          uploadModal.style.display = "none";
+        }
+      });
+
+      fileInput.addEventListener("change", (e) => {
+        if (e.target.files.length > 0) {
+          const file = e.target.files[0];
+          fileInfo.innerHTML = `
+                    <div class="file-preview">
+                        <i class="fas ${getFileIcon(file.type)}"></i>
+                        <div>
+                            <strong>${file.name}</strong>
+                            <span>${formatFileSize(file.size)}</span>
+                        </div>
+                    </div>
+                `;
+        }
+      });
+
+      uploadForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const file = fileInput.files[0];
+
+        if (!file) {
+          showNotification("Please select a file first", "error");
+          return;
+        }
+
+        const formData = new FormData();
+        formData.append("file", file);
+
+        try {
+          showLoading(true);
+          const response = await fetch(config.uploadEndpoint, {
+            method: "POST",
+            body: formData,
+          });
+
+          const data = await response.json();
+
+          if (data.status === "success") {
+            showNotification("File uploaded successfully", "success");
+            uploadModal.style.display = "none";
+            fileInput.value = "";
+            fileInfo.innerHTML = "";
+
+            appendMessage("You", `[Attached file: ${file.name}]`, "user");
+            appendMessage(
+              "Gemini",
+              "I've received your file. How would you like me to process it?",
+              "bot"
+            );
+          } else {
+            throw new Error(data.message || "Upload failed");
+          }
+        } catch (err) {
+          showNotification(`Upload failed: ${err.message}`, "error");
+        } finally {
+          showLoading(false);
+        }
+      });
+
+      function getFileIcon(fileType) {
+        if (fileType.includes("image")) return "fa-file-image";
+        if (fileType.includes("pdf")) return "fa-file-pdf";
+        if (fileType.includes("word")) return "fa-file-word";
+        if (fileType.includes("excel") || fileType.includes("spreadsheet"))
+          return "fa-file-excel";
+        if (fileType.includes("text")) return "fa-file-alt";
+        return "fa-file";
+      }
+
+      function formatFileSize(bytes) {
+        if (bytes === 0) return "0 Bytes";
+        const k = 1024;
+        const sizes = ["Bytes", "KB", "MB", "GB"];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
+      }
+
+      document.querySelectorAll(".theme-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const theme = btn.dataset.theme;
+          document.documentElement.setAttribute("data-theme", theme);
+          localStorage.setItem("theme", theme);
+
+          document
+            .querySelectorAll(".theme-btn")
+            .forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+        });
+      });
+
+      function loadSettings() {
+        const savedTheme = localStorage.getItem("theme") || "dark";
+        document.documentElement.setAttribute("data-theme", savedTheme);
+        document
+          .querySelector(`.theme-btn[data-theme="${savedTheme}"]`)
+          .classList.add("active");
+
+        const typingAnimation =
+          localStorage.getItem("typingAnimation") !== "false";
+        const markdownRendering =
+          localStorage.getItem("markdownRendering") !== "false";
+
+        document.getElementById("typing-animation").checked = typingAnimation;
+        document.getElementById("markdown-rendering").checked =
+          markdownRendering;
+
+        document
+          .getElementById("typing-animation")
+          .addEventListener("change", (e) => {
+            localStorage.setItem("typingAnimation", e.target.checked);
+          });
+
+        document
+          .getElementById("markdown-rendering")
+          .addEventListener("change", (e) => {
+            localStorage.setItem("markdownRendering", e.target.checked);
+          });
+      }
+    </script>
+  </body>
+</html>
