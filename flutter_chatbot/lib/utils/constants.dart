@@ -1,6 +1,6 @@
 class Constants {
   // Replace with your actual Gemini API key
-  static const String geminiApiKey = 'AIzaSyA6-R_2id07-Z2zDPSPtJoEDSGz_DZ75eA';
+  static const String geminiApiKey = 'YOUR_GEMINI_API_KEY';
   static const String geminiApiUrl =
       'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent';
 
