@@ -40,10 +40,10 @@ class _ChatInputState extends State<ChatInput> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Theme.of(context).scaffoldBackgroundColor,
+        color: const Color(0xFF1E1E1E),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withOpacity(0.3),
             blurRadius: 4,
             offset: const Offset(0, -2),
           ),
@@ -55,11 +55,24 @@ class _ChatInputState extends State<ChatInput> {
             Expanded(
               child: TextField(
                 controller: _controller,
+                style: const TextStyle(color: Colors.white),
                 decoration: InputDecoration(
                   hintText: 'Type a message...',
+                  hintStyle: const TextStyle(color: Colors.grey),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(25),
+                    borderSide: const BorderSide(color: Colors.grey),
                   ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(25),
+                    borderSide: const BorderSide(color: Colors.grey),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(25),
+                    borderSide: const BorderSide(color: Colors.blue),
+                  ),
+                  filled: true,
+                  fillColor: const Color(0xFF2C2C2C),
                   contentPadding: const EdgeInsets.symmetric(
                     horizontal: 16,
                     vertical: 12,
@@ -75,7 +88,7 @@ class _ChatInputState extends State<ChatInput> {
               onPressed: _canSend ? _sendMessage : null,
               backgroundColor: _canSend
                   ? Theme.of(context).colorScheme.primary
-                  : Colors.grey[300],
+                  : const Color(0xFF3C3C3C),
               child: Icon(
                 Icons.send,
                 color: _canSend ? Colors.white : Colors.grey[600],

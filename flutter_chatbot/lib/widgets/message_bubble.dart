@@ -22,11 +22,11 @@ class MessageBubble extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           if (!message.isUser) ...[
-            CircleAvatar(
+            const CircleAvatar(
               radius: 16,
-              backgroundColor: const Color(0xFF2C2C2C),
+              backgroundColor: Color(0xFF2C2C2C),
               child:
-                  const Icon(Icons.smart_toy, size: 16, color: Colors.white70),
+                  Icon(Icons.smart_toy, size: 16, color: Colors.white70),
             ),
             const SizedBox(width: 8),
           ],
