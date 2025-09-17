@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:uuid/uuid.dart';
 import '../models/chat.dart';
 import '../models/message.dart';
@@ -87,6 +88,145 @@ class _ChatScreenState extends State<ChatScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToBottom());
   }
 
+  String _formatChatContent() {
+    final buffer = StringBuffer();
+    buffer.writeln('Chat: ${currentChat.title}');
+    buffer.writeln('Date: ${DateTime.now().toString().split('.')[0]}');
+    buffer.writeln('=' * 50);
+    buffer.writeln();
+
+    for (final message in currentChat.messages) {
+      final time =
+          '${message.timestamp.hour.toString().padLeft(2, '0')}:${message.timestamp.minute.toString().padLeft(2, '0')}';
+      final sender = message.isUser ? 'You' : 'AI Assistant';
+      buffer.writeln('[$time] $sender:');
+      buffer.writeln(message.text);
+      buffer.writeln();
+    }
+
+    return buffer.toString();
+  }
+
+  Future<void> _downloadChat() async {
+    if (currentChat.messages.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('No messages to download'),
+          backgroundColor: Colors.orange,
+        ),
+      );
+      return;
+    }
+
+    // For mobile, we show dialog to copy or share
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: const Color(0xFF2C2C2C),
+        title: const Text(
+          'Export Chat',
+          style: TextStyle(color: Colors.white),
+        ),
+        content: const Text(
+          'Choose how you want to export this chat:',
+          style: TextStyle(color: Colors.white70),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              _copyChat();
+            },
+            child: const Text('Copy to Clipboard'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              _shareChat();
+            },
+            child: const Text('Share'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _copyChat() async {
+    if (currentChat.messages.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('No messages to copy'),
+          backgroundColor: Colors.orange,
+        ),
+      );
+      return;
+    }
+
+    try {
+      final content = _formatChatContent();
+      await Clipboard.setData(ClipboardData(text: content));
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Chat copied to clipboard!'),
+            backgroundColor: Colors.green,
+          ),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Copy failed: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
+  }
+
+  Future<void> _shareChat() async {
+    if (currentChat.messages.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('No messages to share'),
+          backgroundColor: Colors.orange,
+        ),
+      );
+      return;
+    }
+
+    try {
+      final content = _formatChatContent();
+      await Clipboard.setData(ClipboardData(text: content));
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+                'Chat copied to clipboard! You can now paste it in any app.'),
+            backgroundColor: Colors.green,
+            duration: Duration(seconds: 4),
+          ),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Share failed: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -98,6 +238,45 @@ class _ChatScreenState extends State<ChatScreen> {
         backgroundColor: const Color(0xFF1E1E1E),
         foregroundColor: Colors.white,
         elevation: 0,
+        actions: [
+          PopupMenuButton<String>(
+            icon: const Icon(Icons.more_vert),
+            color: const Color(0xFF2C2C2C),
+            onSelected: (value) {
+              switch (value) {
+                case 'export':
+                  _downloadChat();
+                  break;
+                case 'copy':
+                  _copyChat();
+                  break;
+              }
+            },
+            itemBuilder: (context) => [
+              const PopupMenuItem(
+                value: 'export',
+                child: Row(
+                  children: [
+                    Icon(Icons.download, color: Colors.blue),
+                    SizedBox(width: 8),
+                    Text('Export Chat', style: TextStyle(color: Colors.white)),
+                  ],
+                ),
+              ),
+              const PopupMenuItem(
+                value: 'copy',
+                child: Row(
+                  children: [
+                    Icon(Icons.copy, color: Colors.green),
+                    SizedBox(width: 8),
+                    Text('Copy to Clipboard',
+                        style: TextStyle(color: Colors.white)),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
       body: Column(
         children: [
