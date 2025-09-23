@@ -25,8 +25,6 @@ The web version includes the following tools:
 
 🧠 **AI Assistant**
 ![Overview](screenshots/overview.jpg)
-
-📊 **AI CSV Analyzer**
 ![Overview 2](screenshots/overview_2.jpg)
 
 ---
