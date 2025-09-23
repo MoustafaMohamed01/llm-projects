@@ -1,23 +1,17 @@
-// Configuration - Add your Gemini API key here
 const CONFIG = {
-  GEMINI_API_KEY: "YOUR_GEMINI_API_KEY_HERE", // Replace with your actual API key
+  GEMINI_API_KEY: "YOUR_GEMINI_API_KEY_HERE",
   GEMINI_API_URL:
     "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
-  // Alternative streaming endpoint if you want streaming responses:
-  // GEMINI_STREAM_URL: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:streamGenerateContent'
 };
 
-// Global variables
 let chatHistory = [];
 let currentTool = "ai-assistant";
 let csvData = null;
 let docFile = null;
 
-// Initialize the application
 document.addEventListener("DOMContentLoaded", function () {
   setupEventListeners();
 
-  // Check if API key is configured
   if (CONFIG.GEMINI_API_KEY === "YOUR_GEMINI_API_KEY_HERE") {
     showAlert(
       "warning",
@@ -32,14 +26,12 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function setupEventListeners() {
-  // Tool navigation
   document.querySelectorAll(".tool-button").forEach((button) => {
     button.addEventListener("click", function () {
       switchTool(this.dataset.tool);
     });
   });
 
-  // File drag and drop
   const fileUploads = document.querySelectorAll(".file-upload");
   fileUploads.forEach((upload) => {
     upload.addEventListener("dragover", handleDragOver);
@@ -48,7 +40,6 @@ function setupEventListeners() {
   });
 }
 
-// Gemini API Integration Functions
 async function callGeminiAPI(prompt, systemInstruction = null) {
   if (CONFIG.GEMINI_API_KEY === "YOUR_GEMINI_API_KEY_HERE") {
     throw new Error("Please configure your Gemini API key in script.js");
@@ -126,18 +117,15 @@ async function callGeminiAPI(prompt, systemInstruction = null) {
 }
 
 function switchTool(toolName) {
-  // Update active button
   document
     .querySelectorAll(".tool-button")
     .forEach((btn) => btn.classList.remove("active"));
   document.querySelector(`[data-tool="${toolName}"]`).classList.add("active");
 
-  // Hide all tool contents
   document
     .querySelectorAll(".tool-content")
     .forEach((content) => content.classList.add("hidden"));
 
-  // Show selected tool content
   document.getElementById(toolName).classList.remove("hidden");
 
   currentTool = toolName;
@@ -155,12 +143,10 @@ async function sendMessage() {
 
   if (!message) return;
 
-  // Disable send button
   const sendButton = document.querySelector(".send-button");
   sendButton.disabled = true;
   sendButton.innerHTML = '<span class="loading"></span> Thinking...';
 
-  // Add user message to chat
   addMessage("user", message);
   input.value = "";
 
@@ -177,7 +163,6 @@ async function sendMessage() {
       "Failed to get AI response. Please check your API key and try again."
     );
   } finally {
-    // Re-enable send button
     sendButton.disabled = false;
     sendButton.innerHTML = "Send";
   }
@@ -211,7 +196,6 @@ function downloadChat() {
   downloadFile("chat_history.txt", content);
 }
 
-// Blog Assistant Functions
 function updateWordCount(value) {
   document.getElementById("word-count-display").textContent = value + " words";
 }
@@ -276,7 +260,6 @@ function handleCSVUpload(event) {
       const lines = csv.split("\n");
       const headers = lines[0].split(",");
 
-      // Create preview table
       let tableHTML =
         '<table style="width:100%; border-collapse: collapse; margin: 1rem 0;">';
       tableHTML += "<thead><tr>";
@@ -285,7 +268,6 @@ function handleCSVUpload(event) {
       });
       tableHTML += "</tr></thead><tbody>";
 
-      // Show first 5 rows
       for (let i = 1; i < Math.min(6, lines.length); i++) {
         if (lines[i].trim()) {
           const cells = lines[i].split(",");
@@ -333,7 +315,6 @@ async function askCSVQuestion() {
 
   const chatContainer = document.getElementById("csv-chat-container");
 
-  // Add user question
   const userMsg = document.createElement("div");
   userMsg.className = "message user";
   userMsg.textContent = question;
@@ -341,7 +322,6 @@ async function askCSVQuestion() {
 
   input.value = "";
 
-  // Add loading message
   const loadingMsg = document.createElement("div");
   loadingMsg.className = "message assistant";
   loadingMsg.innerHTML = '<span class="loading"></span> Analyzing data...';
@@ -349,7 +329,7 @@ async function askCSVQuestion() {
   chatContainer.scrollTop = chatContainer.scrollHeight;
 
   try {
-    const csvSample = csvData.content.substring(0, 3000); // First 3000 characters
+    const csvSample = csvData.content.substring(0, 3000);
     const prompt = `You are an expert data analysis assistant. The user has provided a CSV dataset with the following columns: ${csvData.headers.join(
       ", "
     )}.
@@ -365,7 +345,6 @@ Question: ${question}`;
 
     const response = await callGeminiAPI(prompt);
 
-    // Replace loading message with actual response
     loadingMsg.textContent = response;
     chatContainer.scrollTop = chatContainer.scrollHeight;
   } catch (error) {
@@ -417,7 +396,6 @@ Focus on what the query does and its purpose.`;
 
     const explanation = await callGeminiAPI(explanationPrompt);
 
-    // Clean up SQL query (remove markdown formatting if present)
     const cleanedSQL = sqlQuery
       .replace(/```sql\n?/g, "")
       .replace(/```\n?/g, "")
@@ -472,17 +450,11 @@ async function summarizeDocument() {
   summarizeButton.innerHTML = '<span class="loading"></span> Processing...';
 
   try {
-    // For this demo, we'll simulate document processing
-    // In a real implementation, you'd need to:
-    // 1. Extract text from PDF/DOCX files using libraries like pdf-lib, docx, etc.
-    // 2. Send the extracted text to Gemini API
-
     showAlert(
       "info",
       "Document processing requires server-side implementation for PDF/DOCX text extraction."
     );
 
-    // Simulated summary
     const mockSummary = `Document Summary for "${docFile.name}":
 
 This is a demonstration of document summarization. In a production environment, this would:
@@ -534,14 +506,11 @@ async function summarizeWebsite() {
   summarizeButton.innerHTML = '<span class="loading"></span> Processing...';
 
   try {
-    // Note: Due to CORS restrictions, fetching websites directly from the browser won't work
-    // This would need to be implemented on the server side
     showAlert(
       "info",
       "Website summarization requires server-side implementation to bypass CORS restrictions."
     );
 
-    // For demo purposes, we'll generate a sample summary
     const prompt = `Based on the URL "${url}", provide a general approach for website summarization. Explain what type of content analysis would be performed if this were a real implementation.`;
 
     const response = await callGeminiAPI(prompt);
@@ -635,9 +604,7 @@ function downloadFile(filename, content) {
 }
 
 function formatMarkdown(text) {
-  // Clean up any existing HTML first and handle special characters
   let formatted = text
-    // Handle code blocks first (before other formatting)
     .replace(
       /```(\w+)?\s*\n([\s\S]*?)\n```/g,
       '<div class="code-block"><pre><code>$2</code></pre></div>'
@@ -647,47 +614,36 @@ function formatMarkdown(text) {
       '<div class="code-block"><pre><code>$1</code></pre></div>'
     )
 
-    // Handle inline code (before bold/italic to avoid conflicts)
     .replace(/`([^`\n]+)`/g, '<code class="inline-code">$1</code>')
 
-    // Handle headers (use ^ for line start and $ for line end)
     .replace(/^### (.+)$/gm, "<h3>$1</h3>")
     .replace(/^## (.+)$/gm, "<h2>$1</h2>")
     .replace(/^# (.+)$/gm, "<h1>$1</h1>")
 
-    // Handle bold and italic (be careful with order)
     .replace(/\*\*\*(.+?)\*\*\*/g, "<strong><em>$1</em></strong>")
     .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
     .replace(/\*(.+?)\*/g, "<em>$1</em>")
 
-    // Handle unordered lists
     .replace(/^[\*\-] (.+)$/gm, "<li>$1</li>")
 
-    // Handle numbered lists
     .replace(/^\d+\. (.+)$/gm, "<li>$1</li>")
 
-    // Convert double line breaks to paragraph breaks
     .replace(/\n\n+/g, "</p><p>")
 
-    // Convert single line breaks to <br>
     .replace(/\n/g, "<br>");
 
-  // Wrap consecutive list items in ul tags
   formatted = formatted.replace(
     /(<li>.*?<\/li>)(\s*<br>\s*<li>.*?<\/li>)*/g,
     function (match) {
-      // Remove <br> tags between list items
       const cleanMatch = match.replace(/<br>\s*/g, "");
       return "<ul>" + cleanMatch + "</ul>";
     }
   );
 
-  // Wrap content in paragraphs if it doesn't start with a block element
   if (!formatted.match(/^<(h[1-6]|div|ul|ol)/)) {
     formatted = "<p>" + formatted + "</p>";
   }
 
-  // Clean up empty paragraphs and extra breaks
   formatted = formatted
     .replace(/<p><\/p>/g, "")
     .replace(/<p>\s*<br>\s*<\/p>/g, "")
@@ -704,14 +660,13 @@ function addMessage(role, content) {
   messageDiv.className = `message ${role}`;
 
   if (role === "assistant") {
-    // Create message content with copy button
     const messageContent = document.createElement("div");
     messageContent.className = "message-content";
     messageContent.innerHTML = formatMarkdown(content);
 
     const copyButton = document.createElement("button");
     copyButton.className = "copy-button";
-    copyButton.innerHTML = "📋 Copy";
+    copyButton.innerHTML = "Copy";
     copyButton.onclick = () => copyToClipboard(content, copyButton);
 
     messageDiv.appendChild(messageContent);
@@ -731,7 +686,7 @@ function copyToClipboard(text, button) {
     .writeText(text)
     .then(() => {
       const originalText = button.innerHTML;
-      button.innerHTML = "✅ Copied!";
+      button.innerHTML = "Copied!";
       button.style.background = "rgba(46, 213, 115, 0.3)";
 
       setTimeout(() => {
@@ -755,20 +710,16 @@ function isValidURL(string) {
 }
 
 function showAlert(type, message) {
-  // Remove existing alerts
   const existingAlerts = document.querySelectorAll(".alert");
   existingAlerts.forEach((alert) => alert.remove());
 
-  // Create new alert
   const alert = document.createElement("div");
   alert.className = `alert ${type}`;
   alert.textContent = message;
 
-  // Insert at the top of main content
   const mainContent = document.querySelector(".main-content");
   mainContent.insertBefore(alert, mainContent.firstChild);
 
-  // Auto-remove after 5 seconds
   setTimeout(() => {
     alert.remove();
   }, 5000);
