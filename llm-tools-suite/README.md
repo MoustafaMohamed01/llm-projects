@@ -2,22 +2,23 @@
 
 An integrated collection of AI-powered tools for productivity, built with **Large Language Models**.
 
-Available in two versions:
+Available in three versions:
 
-* **[v1-streamlit](./v1-streamlit/)** – Python + Streamlit app
-* **[v2-web](./v2-web/)** – HTML/CSS/JS web app
+* **[v1-streamlit](./v1-streamlit/)** – Python + Streamlit app  
+* **[v2-web](./v2-web/)** – HTML/CSS/JS web app  
+* **[v3_app](./v3_app/)** – Flutter mobile app  
 
 ---
 
-## 🚀 Features
+## Features
 
-* 🧠 AI Assistant
-* 📝 Blog AI Assistant
-* 📊 CSV Analyzer
-* 💻 SQL Query Generator
-* 📄 Document Summarizer
-* 🌐 Website Summarizer
-* 🔍 Code Explainer
+* 🧠 AI Assistant  
+* 📝 Blog AI Assistant  
+* 📊 CSV Analyzer  
+* 💻 SQL Query Generator  
+* 📄 Document Summarizer  
+* 🌐 Website Summarizer  
+* 🔍 Code Explainer  
 
 ---
 
@@ -25,13 +26,14 @@ Available in two versions:
 
 ```
 llm-tools-suite/
-  v1-streamlit/   # Streamlit version
-  v2-web/         # Web (HTML/JS) version
+v1-streamlit/   # Streamlit version
+v2-web/         # Web (HTML/JS) version
+v3_app/         # Flutter mobile app
 ```
 
 ---
 
 ## Author
 
-**Moustafa Mohamed** – Aspiring AI Developer
-[GitHub](https://github.com/MoustafaMohamed01) • [LinkedIn](https://linkedin.com/in/moustafamohamed01) • [Kaggle](https://kaggle.com/moustafamohamed01)
+**Moustafa Mohamed** – Aspiring AI Developer  
+[GitHub](https://github.com/MoustafaMohamed01) • [LinkedIn](https://linkedin.com/in/moustafamohamed01) • [Kaggle](https://kaggle.com/moustafamohamed01)  
