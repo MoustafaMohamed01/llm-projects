@@ -78,9 +78,21 @@ pubspec.yaml
 
 ## Screenshots
 
-* Dark theme UI
-* AI Assistant chat interface
-* Blog Assistant generation flow
+<div align="center">
+
+| AI Assistant | Blog Generator | Code Explainer |
+|--------------|----------------|----------------|
+| <img src="Screenshots/ai_assistant.jpg" width="250"/> | <img src="Screenshots/blog_ai_assistant.jpg" width="250"/> | <img src="Screenshots/code_explainer.jpg" width="250"/> |
+
+| CSV Analyzer | SQL Generator | Document Summarizer |
+|--------------|---------------|----------------------|
+| <img src="Screenshots/csv_analyzer.jpg" width="250"/> | <img src="Screenshots/sql_query_generator.jpg" width="250"/> | <img src="Screenshots/dowument_summarizer.jpg" width="250"/> |
+
+| Website Summarizer |
+|--------------------|
+| <img src="Screenshots/website_summarizer.jpg" width="250"/> |
+
+</div>
 
 ---
 
