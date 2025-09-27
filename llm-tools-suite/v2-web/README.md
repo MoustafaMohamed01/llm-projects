@@ -4,8 +4,8 @@ A web-based suite of AI/LLM-powered tools for content generation, data analysis,
 
 ## Themes
 
-- **old-theme** – The original interface design with the previous layout and styling.  
-- **new-theme** – Updated, modern UI with improved usability, futuristic design, and dark mode.
+- **[old-theme](./old-theme/)** – The original interface design with the previous layout and styling.  
+- **[new-theme](./new-theme/)** – Updated, modern UI with improved usability, futuristic design, and dark mode.
 
 ## Features
 
