@@ -7,7 +7,7 @@ Available in three versions:
 * **[v1-streamlit](./v1-streamlit/)** – Python + Streamlit app  
 * **[v2-web](./v2-web/)** – HTML/CSS/JS web app
   * **[old-theme/](./v2-web/old-theme)** – Original interface design  
-  * **[new-theme/](./v2-web/new-theme)** – Modern UI with improved usability and dark/light mode  
+  * **[new-theme/](./v2-web/new-themes)** – Modern UI with improved usability and dark/light mode  
 * **[v3_app](./v3_app/)** – Flutter mobile app  
 
 ---
