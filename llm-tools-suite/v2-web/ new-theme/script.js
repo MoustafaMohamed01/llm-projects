@@ -5,7 +5,7 @@ const CONFIG = {
 };
 
 let chatHistory = [];
-let currentTool = "ai-assistant";
+let currentTool = "dashboard";
 let csvData = null;
 let docFile = null;
 
@@ -40,6 +40,7 @@ function setupEventListeners() {
   });
 }
 
+// Gemini API Integration Functions
 async function callGeminiAPI(prompt, systemInstruction = null) {
   if (CONFIG.GEMINI_API_KEY === "YOUR_GEMINI_API_KEY_HERE") {
     throw new Error("Please configure your Gemini API key in script.js");
@@ -211,6 +212,7 @@ function downloadChat() {
   downloadFile("chat_history.txt", content);
 }
 
+// Blog Assistant Functions
 function updateWordCount(value) {
   document.getElementById("word-count-display").textContent = value + " words";
 }
@@ -439,6 +441,7 @@ function downloadSQL() {
   downloadFile("sql_query_details.md", content);
 }
 
+// Document Summarizer Functions
 function handleDocumentUpload(event) {
   const file = event.target.files[0];
   if (!file) return;
@@ -464,7 +467,6 @@ async function summarizeDocument() {
   summarizeButton.innerHTML = '<span class="loading"></span> Processing...';
 
   try {
-
     showAlert(
       "info",
       "Document processing requires server-side implementation for PDF/DOCX text extraction."
