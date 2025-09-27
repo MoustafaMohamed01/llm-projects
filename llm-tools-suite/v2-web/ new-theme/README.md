@@ -29,7 +29,7 @@ This release introduces a **central homepage**, a **professional dark UI**, and 
 
 ---
 
-## 🖼 Screenshots
+## Screenshots
 
 ### Main Dashboard
 ![Main Page](screenshots/main-page.jpg)
