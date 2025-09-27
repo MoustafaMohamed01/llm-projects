@@ -31,32 +31,17 @@ This release introduces a **central homepage**, a **professional dark UI**, and 
 
 ## 🖼 Screenshots
 
-### Main Page (New Dashboard)
-
+### Main Dashboard
 ![Main Page](screenshots/main-page.jpg)
 
-### Tools
+### Tools Overview
+| AI Assistant | Blog AI Assistant | CSV Analyzer |
+|-------------|-----------------|--------------|
+| ![AI Assistant](screenshots/ai-assistant.jpg) | ![Blog Assistant](screenshots/blog-assistant.jpg) | ![CSV Analyzer](screenshots/csv-analyzer.jpg) |
 
-* **AI Assistant**
-  ![AI Assistant](screenshots/ai-assistant.jpg)
-
-* **Blog AI Assistant**
-  ![Blog Assistant](screenshots/blog-assistant.jpg)
-
-* **AI CSV Analyzer**
-  ![CSV Analyzer](screenshots/csv-analyzer.jpg)
-
-* **SQL Query Generator**
-  ![SQL Generator](screenshots/sql-query-generator.jpg)
-
-* **Document Summarizer**
-  ![Document Summarizer](screenshots/document-summarizer.jpg)
-
-* **Website Summarizer**
-  ![Website Summarizer](screenshots/website-summarizer.jpg)
-
-* **Code Explainer**
-  ![Code Explainer](screenshots/code-explainer.jpg)
+| SQL Query Generator | Document Summarizer | Website Summarizer | Code Explainer |
+|-------------------|------------------|------------------|----------------|
+| ![SQL Generator](screenshots/sql-query-generator.jpg) | ![Document Summarizer](screenshots/document-summarizer.jpg) | ![Website Summarizer](screenshots/website-summarizer.jpg) | ![Code Explainer](screenshots/code-explainer.jpg) |
 
 ---
 
