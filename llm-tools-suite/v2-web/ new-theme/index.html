@@ -3,20 +3,35 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>LLM Tools Suite</title>
+    <title>LLM Tools Suite - AI-Powered Productivity Tools</title>
+    <link rel="icon" type="image/png" href="images/logo.png" />
+    <link rel="apple-touch-icon" href="images/logo.png" />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <div class="container">
       <div class="sidebar">
         <div class="logo">
-          <h1>🛠️ LLM Tools Suite</h1>
-          <p>AI-Powered Productivity Tools</p>
+          <img
+            src="images/logo.png"
+            alt="LLM Tools Suite Logo"
+            class="logo-image"
+          />
+          <div class="logo-text">
+            <h1>LLM Tools Suite</h1>
+            <p>AI-Powered Productivity Tools</p>
+          </div>
         </div>
 
         <ul class="tool-menu">
           <li class="tool-item">
-            <button class="tool-button active" data-tool="ai-assistant">
+            <button class="tool-button active" data-tool="dashboard">
+              <span class="tool-icon">🏠</span>
+              Dashboard
+            </button>
+          </li>
+          <li class="tool-item">
+            <button class="tool-button" data-tool="ai-assistant">
               <span class="tool-icon">🧠</span>
               AI Assistant
             </button>
@@ -63,8 +78,106 @@
       </div>
 
       <div class="main-content">
+        <!-- Dashboard/Home Page -->
+        <div id="dashboard" class="tool-content">
+          <div class="dashboard-header">
+            <img
+              src="images/logo.png"
+              alt="LLM Tools Suite Logo"
+              class="dashboard-logo"
+            />
+            <h1>LLM Tools Suite</h1>
+            <p>
+              Harness the power of AI to supercharge your productivity with our
+              comprehensive suite of intelligent tools.
+            </p>
+          </div>
+
+          <div class="tools-grid">
+            <div class="tool-card" onclick="switchTool('ai-assistant')">
+              <div class="tool-card-icon">🧠</div>
+              <h3>AI Assistant</h3>
+              <p>
+                Get professional assistance for any question or task. Your
+                intelligent companion for problem-solving and information.
+              </p>
+            </div>
+
+            <div class="tool-card" onclick="switchTool('blog-assistant')">
+              <div class="tool-card-icon">📝</div>
+              <h3>Blog AI Assistant</h3>
+              <p>
+                Generate engaging, SEO-optimized blog posts with AI. Perfect for
+                content creators and marketers.
+              </p>
+            </div>
+
+            <div class="tool-card" onclick="switchTool('data-analyzer')">
+              <div class="tool-card-icon">📊</div>
+              <h3>AI CSV Analyzer</h3>
+              <p>
+                Upload CSV files and get intelligent insights. Ask questions
+                about your data and receive comprehensive analysis.
+              </p>
+            </div>
+
+            <div class="tool-card" onclick="switchTool('sql-generator')">
+              <div class="tool-card-icon">💻</div>
+              <h3>SQL Query Generator</h3>
+              <p>
+                Convert natural language descriptions into optimized SQL
+                queries. Supports multiple database dialects.
+              </p>
+            </div>
+
+            <div class="tool-card" onclick="switchTool('document-summarizer')">
+              <div class="tool-card-icon">📄</div>
+              <h3>Document Summarizer</h3>
+              <p>
+                Extract key insights from PDF and Word documents instantly.
+                Perfect for research and document analysis.
+              </p>
+            </div>
+
+            <div class="tool-card" onclick="switchTool('website-summarizer')">
+              <div class="tool-card-icon">🌐</div>
+              <h3>Website Summarizer</h3>
+              <p>
+                Get concise summaries of web pages and articles. Save time by
+                extracting essential information quickly.
+              </p>
+            </div>
+
+            <div class="tool-card" onclick="switchTool('code-explainer')">
+              <div class="tool-card-icon">🔍</div>
+              <h3>Code Explainer</h3>
+              <p>
+                Understand complex code with AI-powered explanations. Get
+                line-by-line breakdowns and insights.
+              </p>
+            </div>
+          </div>
+
+          <div class="dashboard-footer">
+            <div class="stats-container">
+              <div class="stat-item">
+                <h4>7</h4>
+                <p>AI Tools</p>
+              </div>
+              <div class="stat-item">
+                <h4>∞</h4>
+                <p>Possibilities</p>
+              </div>
+              <div class="stat-item">
+                <h4>24/7</h4>
+                <p>Available</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- AI Assistant Tool -->
-        <div id="ai-assistant" class="tool-content">
+        <div id="ai-assistant" class="tool-content hidden">
           <div class="main-header">
             <h1>🧠 AI Assistant</h1>
             <p>
