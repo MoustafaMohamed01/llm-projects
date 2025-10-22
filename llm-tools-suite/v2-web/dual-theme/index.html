@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LLM Tools Suite - AI-Powered Productivity Tools</title>
+    <link rel="icon" type="image/png" href="images/logo.png" />
+    <link rel="apple-touch-icon" href="images/logo.png" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body data-theme="dark">
+    <button
+      class="theme-toggle"
+      onclick="toggleTheme()"
+      aria-label="Toggle theme"
+    >
+      <span class="theme-icon"></span>
+    </button>
+
+    <div class="container">
+      <!-- Sidebar Navigation -->
+      <div class="sidebar">
+        <div class="logo">
+          <img
+            src="images/logo.png"
+            alt="LLM Tools Suite Logo"
+            class="logo-image"
+          />
+          <div class="logo-text">
+            <h1>LLM Tools Suite</h1>
+            <p>AI-Powered Productivity Tools</p>
+          </div>
+        </div>
+
+        <ul class="tool-menu">
+          <li class="tool-item">
+            <button class="tool-button active" data-tool="dashboard">
+              <span class="tool-icon">🏠</span>
+              Dashboard
+            </button>
+          </li>
+          <li class="tool-item">
+            <button class="tool-button" data-tool="ai-assistant">
+              <span class="tool-icon">🧠</span>
+              AI Assistant
+            </button>
+          </li>
+          <li class="tool-item">
+            <button class="tool-button" data-tool="blog-assistant">
+              <span class="tool-icon">📝</span>
+              Blog AI Assistant
+            </button>
+          </li>
+          <li class="tool-item">
+            <button class="tool-button" data-tool="data-analyzer">
+              <span class="tool-icon">📊</span>
+              AI CSV Analyzer
+            </button>
+          </li>
+          <li class="tool-item">
+            <button class="tool-button" data-tool="sql-generator">
+              <span class="tool-icon">💻</span>
+              SQL Query Generator
+            </button>
+          </li>
+          <li class="tool-item">
+            <button class="tool-button" data-tool="document-summarizer">
+              <span class="tool-icon">📄</span>
+              Document Summarizer
+            </button>
+          </li>
+          <li class="tool-item">
+            <button class="tool-button" data-tool="website-summarizer">
+              <span class="tool-icon">🌐</span>
+              Website Summarizer
+            </button>
+          </li>
+          <li class="tool-item">
+            <button class="tool-button" data-tool="code-explainer">
+              <span class="tool-icon">🔍</span>
+              Code Explainer
+            </button>
+          </li>
+        </ul>
+
+        <button class="clear-chat-btn" onclick="clearChat()">Clear Chat</button>
+      </div>
+
+      <!-- Main Content Area -->
+      <div class="main-content">
+        <!-- Dashboard/Home Page -->
+        <div id="dashboard" class="tool-content">
+          <div class="dashboard-header">
+            <img
+              src="images/logo.png"
+              alt="LLM Tools Suite Logo"
+              class="dashboard-logo"
+            />
+            <h1>LLM Tools Suite</h1>
+            <p>
+              Harness the power of AI to supercharge your productivity with our
+              comprehensive suite of intelligent tools.
+            </p>
+          </div>
+
+          <div class="tools-grid">
+            <div class="tool-card" onclick="switchTool('ai-assistant')">
+              <div class="tool-card-icon">🧠</div>
+              <h3>AI Assistant</h3>
+              <p>
+                Get professional assistance for any question or task. Your
+                intelligent companion for problem-solving and information.
+              </p>
+            </div>
+
+            <div class="tool-card" onclick="switchTool('blog-assistant')">
+              <div class="tool-card-icon">📝</div>
+              <h3>Blog AI Assistant</h3>
+              <p>
+                Generate engaging, SEO-optimized blog posts with AI. Perfect for
+                content creators and marketers.
+              </p>
+            </div>
+
+            <div class="tool-card" onclick="switchTool('data-analyzer')">
+              <div class="tool-card-icon">📊</div>
+              <h3>AI CSV Analyzer</h3>
+              <p>
+                Upload CSV files and get intelligent insights. Ask questions
+                about your data and receive comprehensive analysis.
+              </p>
+            </div>
+
+            <div class="tool-card" onclick="switchTool('sql-generator')">
+              <div class="tool-card-icon">💻</div>
+              <h3>SQL Query Generator</h3>
+              <p>
+                Convert natural language descriptions into optimized SQL
+                queries. Supports multiple database dialects.
+              </p>
+            </div>
+
+            <div class="tool-card" onclick="switchTool('document-summarizer')">
+              <div class="tool-card-icon">📄</div>
+              <h3>Document Summarizer</h3>
+              <p>
+                Extract key insights from PDF and Word documents instantly.
+                Perfect for research and document analysis.
+              </p>
+            </div>
+
+            <div class="tool-card" onclick="switchTool('website-summarizer')">
+              <div class="tool-card-icon">🌐</div>
+              <h3>Website Summarizer</h3>
+              <p>
+                Get concise summaries of web pages and articles. Save time by
+                extracting essential information quickly.
+              </p>
+            </div>
+
+            <div class="tool-card" onclick="switchTool('code-explainer')">
+              <div class="tool-card-icon">🔍</div>
+              <h3>Code Explainer</h3>
+              <p>
+                Understand complex code with AI-powered explanations. Get
+                line-by-line breakdowns and insights.
+              </p>
+            </div>
+          </div>
+
+          <div class="dashboard-footer">
+            <div class="stats-container">
+              <div class="stat-item">
+                <h4>7</h4>
+                <p>AI Tools</p>
+              </div>
+              <div class="stat-item">
+                <h4>∞</h4>
+                <p>Possibilities</p>
+              </div>
+              <div class="stat-item">
+                <h4>24/7</h4>
+                <p>Available</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- AI Assistant Tool -->
+        <div id="ai-assistant" class="tool-content hidden">
+          <div class="main-header">
+            <h1>🧠 AI Assistant</h1>
+            <p>
+              I'm here to assist you professionally. Ask your question below.
+            </p>
+          </div>
+
+          <div class="chat-container" id="chat-container">
+            <div class="message assistant">
+              Hello! I'm your AI assistant. How can I help you today?
+            </div>
+          </div>
+
+          <div class="input-container">
+            <input
+              type="text"
+              class="chat-input"
+              id="chat-input"
+              placeholder="Type your message..."
+              onkeypress="handleKeyPress(event)"
+            />
+            <button class="send-button" onclick="sendMessage()">Send</button>
+          </div>
+
+          <button class="download-button" onclick="downloadChat()">
+            Download Chat
+          </button>
+        </div>
+
+        <!-- Blog Assistant Tool -->
+        <div id="blog-assistant" class="tool-content hidden">
+          <div class="main-header">
+            <h1>📝 Blog AI Assistant</h1>
+            <p>Generate engaging blog posts with AI assistance.</p>
+          </div>
+
+          <div class="form-container">
+            <div class="form-group">
+              <label for="blog-title">Blog Title</label>
+              <input
+                type="text"
+                id="blog-title"
+                placeholder="e.g., The Future of AI in Healthcare"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="keywords">Keywords (comma-separated)</label>
+              <input
+                type="text"
+                id="keywords"
+                placeholder="e.g., AI, healthcare, innovation, technology"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="word-count">Number of words</label>
+              <input
+                type="range"
+                id="word-count"
+                min="200"
+                max="2500"
+                step="250"
+                value="750"
+                oninput="updateWordCount(this.value)"
+              />
+              <span id="word-count-display">750 words</span>
+            </div>
+
+            <button class="primary-button" onclick="generateBlog()">
+              Generate Blog
+            </button>
+          </div>
+
+          <div id="blog-output" class="output-container hidden">
+            <h3>Generated Blog Post:</h3>
+            <div id="blog-content"></div>
+            <button class="download-button" onclick="downloadBlog()">
+              Download as Markdown
+            </button>
+          </div>
+        </div>
+
+        <!-- Data Analyzer Tool -->
+        <div id="data-analyzer" class="tool-content hidden">
+          <div class="main-header">
+            <h1>📊 AI CSV Analyzer</h1>
+            <p>Upload and analyze your CSV data using AI.</p>
+          </div>
+
+          <div
+            class="file-upload"
+            onclick="document.getElementById('csv-file').click()"
+          >
+            <div>📁 Click to upload CSV file or drag and drop</div>
+            <input
+              type="file"
+              id="csv-file"
+              accept=".csv"
+              style="display: none"
+              onchange="handleCSVUpload(event)"
+            />
+          </div>
+
+          <div id="csv-preview" class="hidden">
+            <h3>Data Preview:</h3>
+            <div id="csv-table"></div>
+          </div>
+
+          <div id="csv-chat" class="hidden">
+            <div class="chat-container" id="csv-chat-container"></div>
+            <div class="input-container">
+              <input
+                type="text"
+                class="chat-input"
+                id="csv-question"
+                placeholder="Ask a question about your data..."
+                onkeypress="handleCSVKeyPress(event)"
+              />
+              <button class="send-button" onclick="askCSVQuestion()">
+                Ask
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- SQL Generator Tool -->
+        <div id="sql-generator" class="tool-content hidden">
+          <div class="main-header">
+            <h1>💻 SQL Query Generator</h1>
+            <p>Generate SQL queries from natural language descriptions.</p>
+          </div>
+
+          <div class="form-container">
+            <div class="form-group">
+              <label for="sql-description">Query Description</label>
+              <textarea
+                id="sql-description"
+                rows="4"
+                placeholder="Describe the SQL query you need (e.g., 'Select all users from the users table who registered after 2023-01-01 and order by registration date')"
+              ></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="db-context">Database Context (Optional)</label>
+              <textarea
+                id="db-context"
+                rows="3"
+                placeholder="Provide database schema or context (e.g., table names, columns, relationships)"
+              ></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="sql-dialect">SQL Dialect</label>
+              <select id="sql-dialect">
+                <option value="Generic SQL">Generic SQL</option>
+                <option value="PostgreSQL">PostgreSQL</option>
+                <option value="MySQL">MySQL</option>
+                <option value="SQLite">SQLite</option>
+                <option value="SQL Server">SQL Server</option>
+                <option value="Oracle">Oracle</option>
+              </select>
+            </div>
+
+            <button class="primary-button" onclick="generateSQL()">
+              Generate SQL Query
+            </button>
+          </div>
+
+          <div id="sql-output" class="output-container hidden">
+            <h3>Generated SQL Query:</h3>
+            <div class="code-block" id="sql-query"></div>
+            <h3>Expected Output:</h3>
+            <div id="sql-expected-output"></div>
+            <h3>Explanation:</h3>
+            <div id="sql-explanation"></div>
+            <button class="download-button" onclick="downloadSQL()">
+              Download SQL Details
+            </button>
+          </div>
+        </div>
+
+        <!-- Document Summarizer Tool -->
+        <div id="document-summarizer" class="tool-content hidden">
+          <div class="main-header">
+            <h1>📄 Document Summarizer</h1>
+            <p>Summarize PDF and Word documents instantly.</p>
+          </div>
+
+          <div
+            class="file-upload"
+            onclick="document.getElementById('doc-file').click()"
+          >
+            <div>📁 Click to upload PDF or Word document</div>
+            <input
+              type="file"
+              id="doc-file"
+              accept=".pdf,.docx"
+              style="display: none"
+              onchange="handleDocumentUpload(event)"
+            />
+          </div>
+
+          <button
+            class="primary-button"
+            onclick="summarizeDocument()"
+            style="margin-top: 1rem"
+          >
+            Generate Summary
+          </button>
+
+          <div id="doc-output" class="output-container hidden">
+            <h3>Generated Summary:</h3>
+            <div id="doc-summary"></div>
+            <button class="download-button" onclick="downloadDocSummary()">
+              Download Summary
+            </button>
+          </div>
+        </div>
+
+        <!-- Website Summarizer Tool -->
+        <div id="website-summarizer" class="tool-content hidden">
+          <div class="main-header">
+            <h1>🌐 Website Summarizer</h1>
+            <p>Summarize web pages by providing a URL.</p>
+          </div>
+
+          <div class="form-container">
+            <div class="form-group">
+              <label for="website-url">Website URL</label>
+              <input
+                type="url"
+                id="website-url"
+                placeholder="e.g., https://www.example.com"
+              />
+            </div>
+
+            <button class="primary-button" onclick="summarizeWebsite()">
+              Summarize Website
+            </button>
+          </div>
+
+          <div id="website-output" class="output-container hidden">
+            <h3>Website Summary:</h3>
+            <div id="website-summary"></div>
+            <button class="download-button" onclick="downloadWebsiteSummary()">
+              Download Summary
+            </button>
+          </div>
+        </div>
+
+        <!-- Code Explainer Tool -->
+        <div id="code-explainer" class="tool-content hidden">
+          <div class="main-header">
+            <h1>🔍 Code Explainer</h1>
+            <p>Understand code with AI-powered step-by-step explanations.</p>
+          </div>
+
+          <div class="form-container">
+            <div class="form-group">
+              <label for="code-language">Programming Language</label>
+              <select id="code-language">
+                <option value="Python">Python</option>
+                <option value="JavaScript">JavaScript</option>
+                <option value="C++">C++</option>
+                <option value="Java">Java</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="code-input">Code to Explain</label>
+              <textarea
+                id="code-input"
+                rows="15"
+                placeholder="Paste your code here..."
+              ></textarea>
+            </div>
+
+            <button class="primary-button" onclick="explainCode()">
+              Explain Code
+            </button>
+          </div>
+
+          <div id="code-output" class="output-container hidden">
+            <h3>Code Explanation:</h3>
+            <div id="code-explanation"></div>
+            <button class="download-button" onclick="downloadCodeExplanation()">
+              Download Explanation
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
