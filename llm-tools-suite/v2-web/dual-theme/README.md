@@ -1,6 +1,8 @@
 # LLM Tools Suite
 
-A comprehensive AI-powered productivity toolkit with **Dark/Light Theme Toggle**.
+A comprehensive AI-powered productivity toolkit with **Dark/Light Theme Toggle**.  
+
+**Live Demo:** [https://llmtoolsuite-demo.netlify.app/](https://llmtoolsuite-demo.netlify.app/)
 
 ## Features
 
@@ -21,6 +23,7 @@ A comprehensive AI-powered productivity toolkit with **Dark/Light Theme Toggle**
 
 ## Project Structure
 ```
+
 LLM-Tools-Suite/
 │
 ├── index.html          # Main HTML file
@@ -28,8 +31,9 @@ LLM-Tools-Suite/
 ├── script.js           # JavaScript with theme logic
 │
 └── images/
-    └── logo.png        # Your logo (place here)
-```
+└── logo.png        # Your logo (place here)
+
+````
 
 ## ⚙️ Setup Instructions
 
@@ -47,7 +51,7 @@ const CONFIG = {
   GEMINI_API_KEY: "YOUR_GEMINI_API_KEY_HERE", // ← Replace with your key
   ...
 };
-```
+````
 
 ### 3. Add Your Logo
 
@@ -62,9 +66,10 @@ Simply open `index.html` in a modern web browser (Chrome, Firefox, Edge, Safari)
 ### Theme Toggle Button
 
 The theme toggle button is fixed in the top-right corner:
-- **Dark Mode**: Shows ☀️
-- **Light Mode**: Shows 🌙
-- Preference is saved to localStorage
+
+* **Dark Mode**: Shows ☀️
+* **Light Mode**: Shows 🌙
+* Preference is saved to localStorage
 
 ## How Theme System Works
 
@@ -75,32 +80,34 @@ The theme toggle button is fixed in the top-right corner:
 
 ## Browser Support
 
-- Chrome/Edge
-- Firefox
-- Safari
-- Mobile browsers
+* Chrome/Edge
+* Firefox
+* Safari
+* Mobile browsers
 
 ## Notes
 
-- **Document/Website Summarizers**: Require server-side implementation for full functionality
-- **CSV Analyzer**: Works with standard CSV format
-- **All features**: Powered by Google's Gemini 2.5 Flash AI
+* **Document/Website Summarizers**: Require server-side implementation for full functionality
+* **CSV Analyzer**: Works with standard CSV format
+* **All features**: Powered by Google's Gemini 2.5 Flash AI
 
 ## Features Highlights
 
 ### Dark Theme (Default)
-- Sleek black/purple gradient
-- Purple accents (#6366f1)
-- Glowing effects on logo and buttons
+
+* Sleek black/purple gradient
+* Purple accents (#6366f1)
+* Glowing effects on logo and buttons
 
 ### Light Theme
-- Bright white/blue background (#f5faff)
-- Google Blue accents (#1a73e8)
-- Clean, modern design
-- Professional appearance
+
+* Bright white/blue background (#f5faff)
+* Google Blue accents (#1a73e8)
+* Clean, modern design
+* Professional appearance
 
 ## Security
 
-- API key is client-side (for demo purposes)
-- For production, use server-side API calls
-- Never commit API keys to public repositories
+* API key is client-side (for demo purposes)
+* For production, use server-side API calls
+* Never commit API keys to public repositories
