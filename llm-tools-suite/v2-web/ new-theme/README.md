@@ -1,10 +1,12 @@
 # LLM Tools Suite – Web Version (New Theme)
 
 📛 **Badges**
-Live Demo | License: MIT | Built with HTML, CSS, JavaScript | LLM: Google Gemini API | LangChain (via API Backend)
+License: MIT | Built with HTML, CSS, JavaScript | LLM: Google Gemini API | LangChain (via API Backend)
 
 An updated **web version** of the **LLM Tools Suite**, redesigned with a **modern dashboard theme**.
 This release introduces a **central homepage**, a **professional dark UI**, and **tool-specific screenshots** for a clearer overview.
+
+**Live:** [https://llmtoolsuite.netlify.app/](https://llmtoolsuite.netlify.app/)
 
 ---
 
