@@ -51,13 +51,16 @@ This release introduces a **central homepage**, a **professional dark UI**, and 
 
 ```
 new-theme/
-│
-├── index.html            # Main web page (dashboard theme)
-├── style.css             # Styling (dark theme, responsive design)
-├── script.js             # JavaScript functionality
-│
+├── index.html              # Main HTML file
+├── style.css               # Styling
+├── script.js               # Frontend JavaScript (updated for Netlify)
+├── netlify.toml            # Netlify configuration
+├── package.json            # Node dependencies
+├── netlify/
+│   └── functions/
+│       └── queryGemini.js  # Serverless function for Gemini API
 ├── images/
-│   └── logo.png          # App logo
+│   └── logo.png            # Application logo
 │
 ├── screenshots/          # Tool screenshots
 │   ├── main-page.jpg
@@ -69,7 +72,7 @@ new-theme/
 │   ├── website-summarizer.jpg
 │   └── code-explainer.jpg
 │
-└── README.md             # This file
+└── README.md               # This file
 ```
 
 ---
