@@ -1,8 +1,4 @@
-const CONFIG = {
-  GEMINI_API_KEY: "YOUR_GEMINI_API_KEY_HERE",
-  GEMINI_API_URL:
-    "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
-};
+// script.js - LLM Tools Suite with Netlify Functions Integration
 
 let chatHistory = [];
 let currentTool = "dashboard";
@@ -11,18 +7,10 @@ let docFile = null;
 
 document.addEventListener("DOMContentLoaded", function () {
   setupEventListeners();
-
-  if (CONFIG.GEMINI_API_KEY === "YOUR_GEMINI_API_KEY_HERE") {
-    showAlert(
-      "warning",
-      "Please configure your Gemini API key in the script.js file to enable AI functionality."
-    );
-  } else {
-    showAlert(
-      "success",
-      "LLM Tools Suite loaded successfully with Gemini 2.5 Flash!"
-    );
-  }
+  showAlert(
+    "success",
+    "LLM Tools Suite loaded successfully with Gemini 2.0 Flash!"
+  );
 });
 
 function setupEventListeners() {
@@ -40,76 +28,31 @@ function setupEventListeners() {
   });
 }
 
-// Gemini API Integration Functions
+// Gemini API Integration via Netlify Function
 async function callGeminiAPI(prompt, systemInstruction = null) {
-  if (CONFIG.GEMINI_API_KEY === "YOUR_GEMINI_API_KEY_HERE") {
-    throw new Error("Please configure your Gemini API key in script.js");
-  }
-
-  const requestBody = {
-    contents: [
-      {
-        parts: [
-          {
-            text: systemInstruction
-              ? `${systemInstruction}\n\n${prompt}`
-              : prompt,
-          },
-        ],
-      },
-    ],
-    generationConfig: {
-      temperature: 0.9,
-      topK: 1,
-      topP: 1,
-      maxOutputTokens: 8192,
-    },
-    safetySettings: [
-      {
-        category: "HARM_CATEGORY_HARASSMENT",
-        threshold: "BLOCK_MEDIUM_AND_ABOVE",
-      },
-      {
-        category: "HARM_CATEGORY_HATE_SPEECH",
-        threshold: "BLOCK_MEDIUM_AND_ABOVE",
-      },
-      {
-        category: "HARM_CATEGORY_SEXUALLY_EXPLICIT",
-        threshold: "BLOCK_MEDIUM_AND_ABOVE",
-      },
-      {
-        category: "HARM_CATEGORY_DANGEROUS_CONTENT",
-        threshold: "BLOCK_MEDIUM_AND_ABOVE",
-      },
-    ],
-  };
-
   try {
-    const response = await fetch(
-      `${CONFIG.GEMINI_API_URL}?key=${CONFIG.GEMINI_API_KEY}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(requestBody),
-      }
-    );
+    const response = await fetch("/.netlify/functions/queryGemini", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        prompt: prompt,
+        systemInstruction: systemInstruction,
+      }),
+    });
 
     if (!response.ok) {
-      const errorData = await response.text();
-      console.error("API Error:", errorData);
-      throw new Error(
-        `API request failed: ${response.status} ${response.statusText}`
-      );
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.error || `Request failed: ${response.status}`);
     }
 
     const data = await response.json();
 
-    if (data.candidates && data.candidates[0] && data.candidates[0].content) {
-      return data.candidates[0].content.parts[0].text;
+    if (data.success && data.response) {
+      return data.response;
     } else {
-      throw new Error("Invalid response format from Gemini API");
+      throw new Error(data.error || "Invalid response from server");
     }
   } catch (error) {
     console.error("Error calling Gemini API:", error);
@@ -121,13 +64,20 @@ function switchTool(toolName) {
   document
     .querySelectorAll(".tool-button")
     .forEach((btn) => btn.classList.remove("active"));
-  document.querySelector(`[data-tool="${toolName}"]`).classList.add("active");
+
+  const targetButton = document.querySelector(`[data-tool="${toolName}"]`);
+  if (targetButton) {
+    targetButton.classList.add("active");
+  }
 
   document
     .querySelectorAll(".tool-content")
     .forEach((content) => content.classList.add("hidden"));
 
-  document.getElementById(toolName).classList.remove("hidden");
+  const targetContent = document.getElementById(toolName);
+  if (targetContent) {
+    targetContent.classList.remove("hidden");
+  }
 
   currentTool = toolName;
 }
@@ -161,7 +111,7 @@ async function sendMessage() {
     addMessage("assistant", `Sorry, I encountered an error: ${error.message}`);
     showAlert(
       "error",
-      "Failed to get AI response. Please check your API key and try again."
+      "Failed to get AI response. Please check your configuration and try again."
     );
   } finally {
     sendButton.disabled = false;
@@ -201,6 +151,7 @@ function clearChat() {
   chatContainer.innerHTML =
     '<div class="message assistant">Hello! I\'m your AI assistant. How can I help you today?</div>';
   chatHistory = [];
+  showAlert("info", "Chat history cleared successfully.");
 }
 
 function downloadChat() {
@@ -210,6 +161,7 @@ function downloadChat() {
     )
     .join("\n\n");
   downloadFile("chat_history.txt", content);
+  showAlert("success", "Chat history downloaded successfully!");
 }
 
 // Blog Assistant Functions
@@ -235,11 +187,13 @@ async function generateBlog() {
 
   try {
     const prompt = `Generate a comprehensive, well-structured, and engaging blog post.
-        **Title:** "${title}"
-        **Keywords:** "${keywords}" (Integrate these naturally throughout the content)
-        **Tone:** Professional yet accessible, suitable for a broad audience.
-        **Structure:** Include a captivating introduction, informative body paragraphs with clear headings/subheadings, and a concise conclusion (with a call to action if appropriate).
-        **Word Count:** Approximately ${wordCount} words.`;
+**Title:** "${title}"
+**Keywords:** "${keywords}" (Integrate these naturally throughout the content)
+**Tone:** Professional yet accessible, suitable for a broad audience.
+**Structure:** Include a captivating introduction, informative body paragraphs with clear headings/subheadings, and a concise conclusion (with a call to action if appropriate).
+**Word Count:** Approximately ${wordCount} words.
+
+Please format with markdown including headers, paragraphs, and bullet points where appropriate.`;
 
     const response = await callGeminiAPI(prompt);
 
@@ -263,6 +217,7 @@ function downloadBlog() {
     document.getElementById("blog-title").value.replace(/\s+/g, "_") ||
     "generated_blog";
   downloadFile(`${title}.md`, content);
+  showAlert("success", "Blog post downloaded successfully!");
 }
 
 // CSV Analyzer Functions
@@ -274,23 +229,29 @@ function handleCSVUpload(event) {
   reader.onload = function (e) {
     try {
       const csv = e.target.result;
-      const lines = csv.split("\n");
-      const headers = lines[0].split(",");
+      const lines = csv.split("\n").filter((line) => line.trim());
+
+      if (lines.length === 0) {
+        showAlert("error", "CSV file is empty.");
+        return;
+      }
+
+      const headers = lines[0].split(",").map((h) => h.trim());
 
       let tableHTML =
         '<table style="width:100%; border-collapse: collapse; margin: 1rem 0;">';
       tableHTML += "<thead><tr>";
       headers.forEach((header) => {
-        tableHTML += `<th style="border: 1px solid rgba(255,255,255,0.1); padding: 0.75rem; background: rgba(99,102,241,0.2); color: #fff;">${header.trim()}</th>`;
+        tableHTML += `<th style="border: 1px solid rgba(255,255,255,0.1); padding: 0.75rem; background: rgba(99,102,241,0.2); color: #fff;">${header}</th>`;
       });
       tableHTML += "</tr></thead><tbody>";
 
       for (let i = 1; i < Math.min(6, lines.length); i++) {
         if (lines[i].trim()) {
-          const cells = lines[i].split(",");
+          const cells = lines[i].split(",").map((c) => c.trim());
           tableHTML += "<tr>";
           cells.forEach((cell) => {
-            tableHTML += `<td style="border-bottom: 1px solid rgba(255,255,255,0.1); padding: 0.75rem; color: rgba(255,255,255,0.8);">${cell.trim()}</td>`;
+            tableHTML += `<td style="border-bottom: 1px solid rgba(255,255,255,0.1); padding: 0.75rem; color: rgba(255,255,255,0.8);">${cell}</td>`;
           });
           tableHTML += "</tr>";
         }
@@ -309,11 +270,15 @@ function handleCSVUpload(event) {
         } columns.`
       );
     } catch (error) {
+      console.error("CSV parsing error:", error);
       showAlert(
         "error",
         "Error parsing CSV file. Please ensure it's properly formatted."
       );
     }
+  };
+  reader.onerror = function () {
+    showAlert("error", "Error reading file. Please try again.");
   };
   reader.readAsText(file);
 }
@@ -328,7 +293,10 @@ async function askCSVQuestion() {
   const input = document.getElementById("csv-question");
   const question = input.value.trim();
 
-  if (!question || !csvData) return;
+  if (!question || !csvData) {
+    showAlert("warning", "Please enter a question about your data.");
+    return;
+  }
 
   const chatContainer = document.getElementById("csv-chat-container");
 
@@ -362,9 +330,11 @@ Question: ${question}`;
 
     const response = await callGeminiAPI(prompt);
 
+    loadingMsg.className = "message assistant";
     loadingMsg.innerHTML = formatMarkdown(response);
     chatContainer.scrollTop = chatContainer.scrollHeight;
   } catch (error) {
+    loadingMsg.className = "message assistant";
     loadingMsg.textContent = `Error analyzing data: ${error.message}`;
     showAlert("error", "Failed to analyze data. Please try again.");
   }
@@ -391,6 +361,7 @@ async function generateSQL() {
     const sqlPrompt = `Generate a ${dialect} SQL query based on the following description:
 Description: ${description}
 ${context ? `Database Context: ${context}` : ""}
+
 Provide only the SQL query as a raw string, without any additional explanations, markdown code block delimiters, or introductory/concluding remarks.`;
 
     const sqlQuery = await callGeminiAPI(sqlPrompt);
@@ -399,6 +370,7 @@ Provide only the SQL query as a raw string, without any additional explanations,
 \`\`\`sql
 ${sqlQuery}
 \`\`\`
+
 What would be a plausible sample tabular response?
 Provide a concise sample tabular response formatted as a Markdown table, with no additional explanation.
 If the query is for DDL/DML (e.g., CREATE, INSERT, UPDATE, DELETE), state "No direct tabular output for this type of query."`;
@@ -439,6 +411,7 @@ function downloadSQL() {
   const explanation = document.getElementById("sql-explanation").textContent;
   const content = `### Generated SQL Query:\n\`\`\`sql\n${query}\n\`\`\`\n\n### Explanation:\n${explanation}`;
   downloadFile("sql_query_details.md", content);
+  showAlert("success", "SQL query details downloaded successfully!");
 }
 
 // Document Summarizer Functions
@@ -497,6 +470,7 @@ To implement full functionality, you'll need server-side processing to extract t
 function downloadDocSummary() {
   const content = document.getElementById("doc-summary").textContent;
   downloadFile("document_summary.txt", content);
+  showAlert("success", "Document summary downloaded successfully!");
 }
 
 // Website Summarizer Functions
@@ -528,7 +502,7 @@ async function summarizeWebsite() {
       "Website summarization requires server-side implementation to bypass CORS restrictions."
     );
 
-    const prompt = `Based on the URL "${url}", provide a general approach for website summarization. Explain what type of content analysis would be performed if this were a real implementation.`;
+    const prompt = `Based on the URL "${url}", provide a general approach for website summarization. Explain what type of content analysis would be performed if this were a real implementation, and what insights could be extracted from such a website.`;
 
     const response = await callGeminiAPI(prompt);
 
@@ -547,6 +521,7 @@ async function summarizeWebsite() {
 function downloadWebsiteSummary() {
   const content = document.getElementById("website-summary").textContent;
   downloadFile("website_summary.md", content);
+  showAlert("success", "Website summary downloaded successfully!");
 }
 
 // Code Explainer Functions
@@ -572,12 +547,12 @@ async function explainCode() {
 
 2. Then provide a **comprehensive overview explanation** of what the entire code does.
 
-3. Finally, give a **detailed, line-by-line explanation** of the code. For each line:
+3. Finally, give a **detailed, line-by-line explanation** of the code. For each line or logical block:
    - Explain what the line does.
    - Explain each key word, function, or syntax element.
    - Use bullet points or markdown formatting for clarity.
    - Explain context if part of a block (function, loop, condition).
-   - Write lines in code blocks.
+   - Format code inline with backticks.
 
 Here is the code:
 \`\`\`${language.toLowerCase()}
@@ -605,6 +580,7 @@ Start with the full code, then overview, then line-by-line explanation.`;
 function downloadCodeExplanation() {
   const content = document.getElementById("code-explanation").textContent;
   downloadFile("code_explanation.md", content);
+  showAlert("success", "Code explanation downloaded successfully!");
 }
 
 // Utility Functions
@@ -622,33 +598,38 @@ function downloadFile(filename, content) {
 
 function formatMarkdown(text) {
   let formatted = text
+    // Code blocks with language
     .replace(
       /```(\w+)?\s*\n([\s\S]*?)\n```/g,
       '<div class="code-block"><pre><code>$2</code></pre></div>'
     )
+    // Code blocks without language
     .replace(
       /```([\s\S]*?)```/g,
       '<div class="code-block"><pre><code>$1</code></pre></div>'
     )
-
+    // Inline code
     .replace(/`([^`\n]+)`/g, '<code class="inline-code">$1</code>')
-
+    // Headers
     .replace(/^### (.+)$/gm, "<h3>$1</h3>")
     .replace(/^## (.+)$/gm, "<h2>$1</h2>")
     .replace(/^# (.+)$/gm, "<h1>$1</h1>")
-
+    // Bold and italic
     .replace(/\*\*\*(.+?)\*\*\*/g, "<strong><em>$1</em></strong>")
     .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
     .replace(/\*(.+?)\*/g, "<em>$1</em>")
-
-    .replace(/^[\*\-] (.+)$/gm, "<li>$1</li>")
-
+    .replace(/___(.+?)___/g, "<strong><em>$1</em></strong>")
+    .replace(/__(.+?)__/g, "<strong>$1</strong>")
+    .replace(/_(.+?)_/g, "<em>$1</em>")
+    // Lists
+    .replace(/^[\*\-\+] (.+)$/gm, "<li>$1</li>")
     .replace(/^\d+\. (.+)$/gm, "<li>$1</li>")
-
+    // Paragraphs
     .replace(/\n\n+/g, "</p><p>")
-
+    // Line breaks
     .replace(/\n/g, "<br>");
 
+  // Wrap lists in ul tags
   formatted = formatted.replace(
     /(<li>.*?<\/li>)(\s*<br>\s*<li>.*?<\/li>)*/g,
     function (match) {
@@ -657,15 +638,18 @@ function formatMarkdown(text) {
     }
   );
 
+  // Wrap in paragraph if doesn't start with block element
   if (!formatted.match(/^<(h[1-6]|div|ul|ol)/)) {
     formatted = "<p>" + formatted + "</p>";
   }
 
+  // Clean up
   formatted = formatted
     .replace(/<p><\/p>/g, "")
     .replace(/<p>\s*<br>\s*<\/p>/g, "")
     .replace(/(<\/h[1-6]>)\s*<br>/g, "$1")
     .replace(/(<\/ul>)\s*<br>/g, "$1")
+    .replace(/(<\/ol>)\s*<br>/g, "$1")
     .replace(/(<\/div>)\s*<br>/g, "$1");
 
   return formatted;
@@ -692,8 +676,8 @@ function copyToClipboard(text, button) {
 
 function isValidURL(string) {
   try {
-    new URL(string);
-    return true;
+    const url = new URL(string);
+    return url.protocol === "http:" || url.protocol === "https:";
   } catch (_) {
     return false;
   }
@@ -708,11 +692,13 @@ function showAlert(type, message) {
   alert.textContent = message;
 
   const mainContent = document.querySelector(".main-content");
-  mainContent.insertBefore(alert, mainContent.firstChild);
+  if (mainContent) {
+    mainContent.insertBefore(alert, mainContent.firstChild);
 
-  setTimeout(() => {
-    alert.remove();
-  }, 5000);
+    setTimeout(() => {
+      alert.remove();
+    }, 5000);
+  }
 }
 
 function handleDragOver(e) {
@@ -735,12 +721,18 @@ function handleDrop(e) {
 
     if (file.name.endsWith(".csv")) {
       const csvInput = document.getElementById("csv-file");
-      csvInput.files = files;
+      const dataTransfer = new DataTransfer();
+      dataTransfer.items.add(file);
+      csvInput.files = dataTransfer.files;
       handleCSVUpload({ target: csvInput });
     } else if (file.name.endsWith(".pdf") || file.name.endsWith(".docx")) {
       const docInput = document.getElementById("doc-file");
-      docInput.files = files;
+      const dataTransfer = new DataTransfer();
+      dataTransfer.items.add(file);
+      docInput.files = dataTransfer.files;
       handleDocumentUpload({ target: docInput });
+    } else {
+      showAlert("warning", "Please upload a CSV, PDF, or DOCX file.");
     }
   }
 }
