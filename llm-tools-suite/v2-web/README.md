@@ -2,7 +2,7 @@
 
 A web-based suite of AI/LLM-powered tools for content generation, data analysis, and coding assistance.  
 
-**Live Demo:** [https://llmtoolsuite-demo.netlify.app/](https://llmtoolsuite-demo.netlify.app/)
+**Live:** [https://llmtoolsuite.netlify.app/](https://llmtoolsuite.netlify.app/)
 
 ## Themes
 
