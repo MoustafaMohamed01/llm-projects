@@ -1,0 +1,21 @@
+[build]
+  # Build command to install dependencies
+  command = "npm install"
+  publish = "."
+  functions = "netlify/functions"
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
+# SPA fallback for client-side routing (optional)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[dev]
+  # For local development with netlify dev
+  functions = "netlify/functions"
+  publish = "."
