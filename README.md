@@ -12,7 +12,7 @@ Explore the live versions of selected apps from this collection:
 
 | Project | Live Demo | Description |
 |----------|------------|-------------|
-| **LLM Tools Suite – Web Version** | [llmtoolsuite-demo.netlify.app](https://llmtoolsuite-demo.netlify.app/) | Web-based version featuring a modern dual-theme UI for all AI tools. |
+| **LLM Tools Suite – Web Version** | [llmtoolsuite.netlify.app](https://llmtoolsuite.netlify.app/) | Web-based version featuring a modern Dark-theme UI for all AI tools. |
 | **LLM Tools Suite – Streamlit Version** | [llm-tools-suite.streamlit.app](https://llm-tools-suite.streamlit.app/) | Streamlit-powered suite integrating Blog AI, CSV Analyzer, SQL Generator, and Summarizers. |
 | **Flutter Chatbot** | [moustafamohamed01.itch.io/flutter-chatbot](https://moustafamohamed01.itch.io/flutter-chatbot) | Cross-platform AI chatbot built with Flutter and integrated LLM backend. |
 
