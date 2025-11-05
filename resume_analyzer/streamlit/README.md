@@ -98,8 +98,6 @@ resume_analyzer/
 
 ---
 
-### Author
-
 **Moustafa Mohamed**
 Aspiring AI Developer | Specialized in Machine Learning, Deep Learning, and LLM Engineering
 
